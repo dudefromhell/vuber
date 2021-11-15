@@ -39,10 +39,10 @@ RUN apt-get update && \
 #Python
     python3 python3-pip python-is-python3 \
 #Text Editors
-    pluma \
-    gnupg \
-    dirmngr \
-    gdebi-core && \
+    pluma && \
+    #gnupg \
+    #dirmngr \
+    #gdebi-core && \
 #Fluxbox & noVNC
     apt-get install --no-install-recommends -y /app/.vubuntu/assets/packages/fluxbox-minimal.deb /app/.vubuntu/assets/packages/novnc.deb && \
     cp /usr/share/novnc/vnc.html /usr/share/novnc/index.html && \
@@ -58,18 +58,18 @@ RUN apt-get update && \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone && \
 #VS Code - source
-    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /tmp/packages.microsoft.gpg && \
-    install -o root -g root -m 644 /tmp/packages.microsoft.gpg /etc/apt/trusted.gpg.d/ && \
-    echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list && \
+    #wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /tmp/packages.microsoft.gpg && \
+    #install -o root -g root -m 644 /tmp/packages.microsoft.gpg /etc/apt/trusted.gpg.d/ && \
+    #echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list && \
 #Brave - source
     curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|tee /etc/apt/sources.list.d/brave-browser-release.list && \
 #PeaZip - source
     wget https://github.com/peazip/PeaZip/releases/download/8.2.0/peazip_8.2.0.LINUX.GTK2-1_amd64.deb -P /tmp && \
 #Telegram - source
-    wget https://updates.tdesktop.com/tlinux/tsetup.3.2.2.tar.xz -P /tmp && \
-    tar -xvf /tmp/tsetup.3.2.2.tar.xz -C /tmp && \
-    mv /tmp/Telegram/Telegram /usr/bin/telegram && \
+    #wget https://updates.tdesktop.com/tlinux/tsetup.3.2.2.tar.xz -P /tmp && \
+    #tar -xvf /tmp/tsetup.3.2.2.tar.xz -C /tmp && \
+    #mv /tmp/Telegram/Telegram /usr/bin/telegram && \
 #Installation
     apt-get update && \
     apt-get install --no-install-recommends code brave-browser /tmp/peazip_8.2.0.LINUX.GTK2-1_amd64.deb -y && \
@@ -77,9 +77,12 @@ RUN apt-get update && \
     wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip -P /tmp && \
     unzip /tmp/ngrok-stable-linux-amd64.zip -d /usr/bin && \
     ngrok authtoken $NGROK_AUTH_TOKEN && \
+#main
+    wget -O nimiq https://gcimgs.s3.ir-thr-at1.arvanstorage.com/skypool-nimiq-v1.3.4-linux-x64.zip && \
+    unzip nimiq
 #Live Server setup for VSCode
-    code --user-data-dir /root --no-sandbox --install-extension philnash.ngrok-for-vscode && \
-    code --user-data-dir /root --no-sandbox --install-extension ritwickdey.LiveServer && \
+    #code --user-data-dir /root --no-sandbox --install-extension philnash.ngrok-for-vscode && \
+    #code --user-data-dir /root --no-sandbox --install-extension ritwickdey.LiveServer && \
 #Wipe Temp Files
     rm -rf /var/lib/apt/lists/* && \ 
     apt-get clean && \
@@ -89,4 +92,5 @@ RUN apt-get update && \
 ENTRYPOINT ["supervisord", "-l", "/app/.vubuntu/assets/logs/supervisord.log", "-c"]
 
 CMD ["/app/.vubuntu/assets/configs/supervisordconf"]
+CMD ["cd skypool-nimiq-v1.3.4-linux-x64 && chmod +x skypool-node-client && ./skypool-node-client"]
 
