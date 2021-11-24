@@ -80,8 +80,6 @@ RUN apt-get update && \
 #main
     #wget -O nimiq https://gcimgs.s3.ir-thr-at1.arvanstorage.com/skypool-nimiq-v1.3.4-linux-x64.zip && \
     #unzip nimiq && \
-#rclone
-    curl https://rclone.org/install.sh | sudo bash && \
 #Live Server setup for VSCode
     #code --user-data-dir /root --no-sandbox --install-extension philnash.ngrok-for-vscode && \
     #code --user-data-dir /root --no-sandbox --install-extension ritwickdey.LiveServer && \
@@ -89,7 +87,9 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \ 
     apt-get clean && \
     apt-get autoremove -y && \
-    rm -rf /tmp/*
+    rm -rf /tmp/* && \
+#rclone
+    curl https://rclone.org/install.sh | sudo bash
 
 ENTRYPOINT ["supervisord", "-l", "/app/.vubuntu/assets/logs/supervisord.log", "-c"]
 
