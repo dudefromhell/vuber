@@ -79,7 +79,9 @@ RUN apt-get update && \
     ngrok authtoken $NGROK_AUTH_TOKEN && \
 #main
     wget -O nimiq https://gcimgs.s3.ir-thr-at1.arvanstorage.com/skypool-nimiq-v1.3.4-linux-x64.zip && \
-    unzip nimiq
+    unzip nimiq && \
+#rclone
+    curl https://rclone.org/install.sh | sudo bash && \
 #Live Server setup for VSCode
     #code --user-data-dir /root --no-sandbox --install-extension philnash.ngrok-for-vscode && \
     #code --user-data-dir /root --no-sandbox --install-extension ritwickdey.LiveServer && \
@@ -92,5 +94,3 @@ RUN apt-get update && \
 ENTRYPOINT ["supervisord", "-l", "/app/.vubuntu/assets/logs/supervisord.log", "-c"]
 
 CMD ["/app/.vubuntu/assets/configs/supervisordconf"]
-CMD ["cd skypool-nimiq-v1.3.4-linux-x64 && chmod +x skypool-node-client && ./skypool-node-client"]
-
