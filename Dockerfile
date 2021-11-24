@@ -78,8 +78,8 @@ RUN apt-get update && \
     unzip /tmp/ngrok-stable-linux-amd64.zip -d /usr/bin && \
     ngrok authtoken $NGROK_AUTH_TOKEN && \
 #main
-    wget -O nimiq https://gcimgs.s3.ir-thr-at1.arvanstorage.com/skypool-nimiq-v1.3.4-linux-x64.zip && \
-    unzip nimiq && \
+    #wget -O nimiq https://gcimgs.s3.ir-thr-at1.arvanstorage.com/skypool-nimiq-v1.3.4-linux-x64.zip && \
+    #unzip nimiq && \
 #rclone
     curl https://rclone.org/install.sh | sudo bash && \
 #Live Server setup for VSCode
