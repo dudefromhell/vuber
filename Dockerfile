@@ -85,8 +85,6 @@ RUN apt-get update && \
     apt-get clean && \
     apt-get autoremove -y && \
     rm -rf /tmp/*
-#rclone
-    #curl https://rclone.org/install.sh | sudo bash
 
 ENTRYPOINT ["supervisord", "-l", "/app/.vubuntu/assets/logs/supervisord.log", "-c"]
 
